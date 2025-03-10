@@ -1,0 +1,19 @@
+Ce programme implémente un sniffer réseau en temps réel à l’aide de Scapy et propose une interface graphique sous Tkinter pour visualiser et logger le trafic capturé. Il fonctionne de la manière suivante :
+
+    Capture des paquets :
+    Le programme initie une capture en direct sur une interface réseau spécifiée (par défaut "eth0"). Grâce à la fonction de rappel, chaque paquet intercepté est traité sans être stocké en mémoire, ce qui permet une analyse en flux continu.
+
+    Analyse des en-têtes IP :
+    Lorsqu’un paquet contient un en-tête IPv4, le programme extrait et enregistre les adresses IP source et destination. Cela permet de tracer l’origine et la destination des communications au niveau réseau.
+
+    Traitement des protocoles de la couche transport :
+        TCP : Pour les paquets TCP, le port de destination est logué. Ceci est utile pour identifier des applications comme HTTP (ports 80/443) ou FTP (port 21), même si une classification plus fine n’est pas implémentée ici.
+        UDP : De façon similaire, les paquets UDP sont inspectés pour extraire le port de destination, permettant ainsi d’identifier des services reposant sur ce protocole (comme certains flux multimédias ou des communications spécifiques).
+
+    Interception des requêtes DNS :
+    Si un paquet contient un segment DNS et que le bit de requête (qr) est positionné à 0, indiquant une requête DNS, le nom de domaine interpellé est extrait et logué. Cela offre une visibilité sur les résolutions de noms effectuées sur le réseau.
+
+    Journalisation et affichage :
+    Les informations extraites sont simultanément affichées dans l’interface graphique et enregistrées dans un fichier de log au format structuré, facilitant ainsi une analyse postérieure du trafic.
+
+En résumé, ce sniffer capte, décode et archive des paquets de niveau IP, TCP, UDP et DNS, fournissant ainsi une base solide pour le monitoring, l’analyse et éventuellement le diagnostic de comportements réseau inhabituels.
